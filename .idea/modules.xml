@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/initiate_calls_to_dart_in_bg.iml" filepath="$PROJECT_DIR$/initiate_calls_to_dart_in_bg.iml" />
-      <module fileurl="file://$PROJECT_DIR$/android/initiate_calls_to_dart_in_bg_android.iml" filepath="$PROJECT_DIR$/android/initiate_calls_to_dart_in_bg_android.iml" />
-      <module fileurl="file://$PROJECT_DIR$/example/android/initiate_calls_to_dart_in_bg_example_android.iml" filepath="$PROJECT_DIR$/example/android/initiate_calls_to_dart_in_bg_example_android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/flutter_boot_listener.iml" filepath="$PROJECT_DIR$/flutter_boot_listener.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android/flutter_boot_listener_android.iml" filepath="$PROJECT_DIR$/android/flutter_boot_listener_android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/example/android/flutter_boot_listener_example_android.iml" filepath="$PROJECT_DIR$/example/android/flutter_boot_listener_example_android.iml" />
     </modules>
   </component>
 </project>

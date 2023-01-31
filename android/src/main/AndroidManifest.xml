@@ -1,8 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.initiate_calls_to_dart_in_bg">
+    package="com.example.flutter_boot_listener">
 
     <application>
-        <service android:name="com.example.initiate_calls_to_dart_in_bg.MyService" />
+        <!-- <service android:name="com.example.flutter_boot_listener.OnBootWorker" 
+        android:permission="android.permission.BIND_JOB_SERVICE"
+        android:exported="true" /> -->
     </application>
 
 </manifest>

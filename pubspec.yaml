@@ -1,12 +1,10 @@
-name: initiate_calls_to_dart_in_bg
+name: flutter_boot_listener
 description: A new flutter plugin project.
 version: 0.0.1
-author:
-homepage:
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
-  flutter: ">=1.20.0 <2.0.0"
+  sdk: ">=2.12.0 <3.0.0"
+  flutter: ">=1.12.13+hotfix.5"
 
 dependencies:
   flutter:
@@ -15,6 +13,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_lints: ^2.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -28,10 +27,8 @@ flutter:
   plugin:
     platforms:
       android:
-        package: com.example.initiate_calls_to_dart_in_bg
-        pluginClass: InitiateCallsToDartInBgPlugin
-      ios:
-        pluginClass: InitiateCallsToDartInBgPlugin
+        package: com.example.flutter_boot_listener
+        pluginClass: FlutterBroadcastListenerPlugin
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:
