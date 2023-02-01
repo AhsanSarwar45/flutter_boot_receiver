@@ -47,11 +47,11 @@ import org.json.JSONObject;
  * Dart is ready to execute tasks.
  * </ol>
  */
-public class FlutterBootListenerPlugin implements FlutterPlugin, MethodCallHandler {
-  private static final String TAG = "FlutterBootListenerPlugin";
+public class FlutterBootReceiverPlugin implements FlutterPlugin, MethodCallHandler {
+  private static final String TAG = "FlutterBootReceiverPlugin";
   private Context context;
   private final Object initializationLock = new Object();
-  private MethodChannel FlutterBootListenerPluginChannel;
+  private MethodChannel FlutterBootReceiverPluginChannel;
 
   @Override
   public void onAttachedToEngine(FlutterPluginBinding binding) {
@@ -60,22 +60,22 @@ public class FlutterBootListenerPlugin implements FlutterPlugin, MethodCallHandl
 
   public void onAttachedToEngine(Context applicationContext, BinaryMessenger messenger) {
     synchronized (initializationLock) {
-      if (FlutterBootListenerPluginChannel != null) {
+      if (FlutterBootReceiverPluginChannel != null) {
         return;
       }
 
       Log.i(TAG, "onAttachedToEngine");
       this.context = applicationContext;
 
-      FlutterBootListenerPluginChannel = new MethodChannel(
+      FlutterBootReceiverPluginChannel = new MethodChannel(
           messenger,
           "com.flux.flutter_boot_receiver/main",
           JSONMethodCodec.INSTANCE);
 
-      // Instantiate a new FlutterBootListenerPlugin and connect the primary
+      // Instantiate a new FlutterBootReceiverPlugin and connect the primary
       // method channel for
       // Android/Flutter communication.
-      FlutterBootListenerPluginChannel.setMethodCallHandler(this);
+      FlutterBootReceiverPluginChannel.setMethodCallHandler(this);
     }
   }
 
@@ -83,11 +83,11 @@ public class FlutterBootListenerPlugin implements FlutterPlugin, MethodCallHandl
   public void onDetachedFromEngine(FlutterPluginBinding binding) {
     Log.i(TAG, "onDetachedFromEngine");
     context = null;
-    FlutterBootListenerPluginChannel.setMethodCallHandler(null);
-    FlutterBootListenerPluginChannel = null;
+    FlutterBootReceiverPluginChannel.setMethodCallHandler(null);
+    FlutterBootReceiverPluginChannel = null;
   }
 
-  public FlutterBootListenerPlugin() {
+  public FlutterBootReceiverPlugin() {
   }
 
   /**
@@ -122,7 +122,7 @@ public class FlutterBootListenerPlugin implements FlutterPlugin, MethodCallHandl
     } catch (JSONException e) {
       result.error("error", "JSON error: " + e.getMessage(), null);
     } catch (PluginRegistrantException e) {
-      result.error("error", "FlutterBootListener error: " + e.getMessage(), null);
+      result.error("error", "FlutterBootReceiver error: " + e.getMessage(), null);
     }
   }
 }
@@ -142,7 +142,7 @@ public class FlutterBootListenerPlugin implements FlutterPlugin, MethodCallHandl
 // import io.flutter.view.FlutterNativeView;
 // import io.flutter.view.FlutterRunArguments;
 
-// public class FlutterBootListener implements FlutterPlugin, MethodCallHandler
+// public class FlutterBootReceiver implements FlutterPlugin, MethodCallHandler
 // {
 
 // public static final String CALLBACK_HANDLE_KEY = "callback_handle_key";
@@ -200,7 +200,7 @@ public class FlutterBootListenerPlugin implements FlutterPlugin, MethodCallHandl
 
 // FlutterCallbackInformation flutterCallbackInformation =
 // FlutterCallbackInformation.lookupCallbackInformation(
-// FlutterBootListener.getCallbackDispatcherHandle());
+// FlutterBootReceiver.getCallbackDispatcherHandle());
 
 // mFlutterRunArguments = new FlutterRunArguments();
 // mFlutterRunArguments.bundlePath = FlutterMain.findAppBundlePath();

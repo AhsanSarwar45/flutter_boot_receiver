@@ -15,7 +15,7 @@ const String _backgroundName = 'com.flux.flutter_boot_receiver/background';
 // any necessary processing in Dart (e.g., populating a custom object) before
 // invoking the provided callback.
 @pragma('vm:entry-point')
-void bootListenerCallbackDispatcher() {
+void bootReceiverCallbackDispatcher() {
   // Initialize state necessary for MethodChannels.
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -50,7 +50,7 @@ typedef _GetCallbackHandle = CallbackHandle? Function(Function callback);
 /// A Flutter plugin for registering Dart callbacks when the Android device boots up
 ///
 /// See the flux/ directory in this package for sample usage.
-class BootListener {
+class BootReceiver {
   static const String _channelName = 'com.flux.flutter_boot_receiver/main';
   static const MethodChannel _channel =
       MethodChannel(_channelName, JSONMethodCodec());
@@ -70,13 +70,13 @@ class BootListener {
     _getCallbackHandle = (getCallbackHandle ?? _getCallbackHandle);
   }
 
-  /// Starts the [BootListener] service. This must be called in order to receive boot complete events.
+  /// Starts the [BootReceiver] service. This must be called in order to receive boot complete events.
   ///
   /// Returns a [Future] that resolves to `true` on success and `false` on
   /// failure.
   static Future<bool> initialize(void Function() callback) async {
     final callbackDispatcherHandle =
-        _getCallbackHandle(bootListenerCallbackDispatcher);
+        _getCallbackHandle(bootReceiverCallbackDispatcher);
     if (callbackDispatcherHandle == null) {
       return false;
     }

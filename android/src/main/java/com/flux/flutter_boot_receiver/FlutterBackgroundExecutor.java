@@ -108,7 +108,7 @@ public class FlutterBackgroundExecutor implements MethodCallHandler {
                 result.notImplemented();
             }
         } catch (PluginRegistrantException error) {
-            result.error("error", "FlutterBootListener error: " + error.getMessage(), null);
+            result.error("error", "FlutterBootReceiver error: " + error.getMessage(), null);
         }
     }
 

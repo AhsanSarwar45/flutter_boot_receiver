@@ -28,7 +28,7 @@ flutter:
     platforms:
       android:
         package: com.flux.flutter_boot_receiver
-        pluginClass: FlutterBootListenerPlugin
+        pluginClass: FlutterBootReceiverPlugin
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:

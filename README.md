@@ -96,5 +96,5 @@ void callback() async {
   // Code here will be executed when the device boots up
 }
 
-await BootListener.initialize(callback);
+await BootReceiver.initialize(callback);
 ```
