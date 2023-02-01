@@ -1,4 +1,4 @@
-package com.example.flutter_boot_listener;
+package com.flux.flutter_boot_listener;
 
 // Copyright 2017 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
@@ -24,7 +24,7 @@ import org.json.JSONObject;
 
 public class BootHandlerService extends JobIntentService {
   private static final String TAG = "BootHandlerService";
-  protected static final String SHARED_PREFERENCES_KEY = "com.example.flutter_boot_listener";
+  protected static final String SHARED_PREFERENCES_KEY = "com.flux.flutter_boot_listener";
   private static final int JOB_ID = 1984; // Random job ID.
 
   private static final List<Intent> mQueue = Collections.synchronizedList(new LinkedList<>());

@@ -1,4 +1,4 @@
-package com.example.flutter_boot_listener;
+package com.flux.flutter_boot_listener;
 
 import android.content.Context;
 import android.util.Log;
@@ -69,7 +69,7 @@ public class FlutterBootListenerPlugin implements FlutterPlugin, MethodCallHandl
 
       FlutterBootListenerPluginChannel = new MethodChannel(
           messenger,
-          "com.example.flutter_boot_listener/main",
+          "com.flux.flutter_boot_listener/main",
           JSONMethodCodec.INSTANCE);
 
       // Instantiate a new FlutterBootListenerPlugin and connect the primary

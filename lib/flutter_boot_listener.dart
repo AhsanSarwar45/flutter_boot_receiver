@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_boot_listener/broadcast_action.dart';
 
-const String _backgroundName = 'com.example.flutter_boot_listener/background';
+const String _backgroundName = 'com.flux.flutter_boot_listener/background';
 
 // This is the entrypoint for the background isolate. Since we can only enter
 // an isolate once, we setup a MethodChannel to listen for method invocations
@@ -49,9 +49,9 @@ typedef _GetCallbackHandle = CallbackHandle? Function(Function callback);
 
 /// A Flutter plugin for registering Dart callbacks when the Android device boots up
 ///
-/// See the example/ directory in this package for sample usage.
+/// See the flux/ directory in this package for sample usage.
 class BootListener {
-  static const String _channelName = 'com.example.flutter_boot_listener/main';
+  static const String _channelName = 'com.flux.flutter_boot_listener/main';
   static const MethodChannel _channel =
       MethodChannel(_channelName, JSONMethodCodec());
 

@@ -1,4 +1,4 @@
-package com.example.flutter_boot_listener;
+package com.flux.flutter_boot_listener;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
