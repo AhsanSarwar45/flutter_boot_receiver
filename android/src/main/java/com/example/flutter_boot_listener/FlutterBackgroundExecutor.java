@@ -56,10 +56,10 @@ public class FlutterBackgroundExecutor implements MethodCallHandler {
      *
      * <p>
      * Note: this is only necessary for applications using the V1 engine embedding
-     * API as plugins
-     * are automatically registered via reflection in the V2 engine embedding API.
-     * If not set, alarm
-     * callbacks will not be able to utilize functionality from other plugins.
+     * API as plugins are automatically registered via reflection in the V2 engine
+     * embedding API.
+     * If not set, dart callbacks will not be able to utilize functionality from
+     * other plugins.
      */
     public static void setPluginRegistrant(PluginRegistrantCallback callback) {
         pluginRegistrantCallback = callback;
@@ -72,14 +72,14 @@ public class FlutterBackgroundExecutor implements MethodCallHandler {
      * requests.
      */
     public static void setCallbackHandles(Context context, long callbackDispatcherHandle, long callbackHandle) {
-        SharedPreferences preferences = context.getSharedPreferences(BroadcastHandlerService.SHARED_PREFERENCES_KEY, 0);
+        SharedPreferences preferences = context.getSharedPreferences(BootHandlerService.SHARED_PREFERENCES_KEY, 0);
         preferences.edit().putLong(CALLBACK_DISPATCHER_HANDLE_KEY, callbackDispatcherHandle).apply();
         preferences.edit().putLong(CALLBACK_HANDLE_KEY, callbackHandle).apply();
     }
 
     /**
      * Returns true when the background isolate has started and is ready to handle
-     * alarms.
+     * dart callbacks.
      */
     public boolean isRunning() {
         return isCallbackDispatcherReady.get();
@@ -87,7 +87,7 @@ public class FlutterBackgroundExecutor implements MethodCallHandler {
 
     private void onInitialized() {
         isCallbackDispatcherReady.set(true);
-        BroadcastHandlerService.onInitialized();
+        BootHandlerService.onInitialized();
     }
 
     @Override
@@ -95,7 +95,7 @@ public class FlutterBackgroundExecutor implements MethodCallHandler {
         String method = call.method;
         Object arguments = call.arguments;
         try {
-            if (method.equals("BroadcastHandlerService.initialized")) {
+            if (method.equals("BootHandlerService.initialized")) {
                 // This message is sent by the background method channel as soon as the
                 // background isolate
                 // is running. From this point forward, the Android side of this plugin can send
@@ -108,7 +108,7 @@ public class FlutterBackgroundExecutor implements MethodCallHandler {
                 result.notImplemented();
             }
         } catch (PluginRegistrantException error) {
-            result.error("error", "FlutterBroadcastListener error: " + error.getMessage(), null);
+            result.error("error", "FlutterBootListener error: " + error.getMessage(), null);
         }
     }
 
@@ -141,7 +141,7 @@ public class FlutterBackgroundExecutor implements MethodCallHandler {
      */
     public void startBackgroundIsolate(Context context) {
         if (!isRunning()) {
-            SharedPreferences preferences = context.getSharedPreferences(BroadcastHandlerService.SHARED_PREFERENCES_KEY,
+            SharedPreferences preferences = context.getSharedPreferences(BootHandlerService.SHARED_PREFERENCES_KEY,
                     0);
             long callbackDispatcherHandle = preferences.getLong(CALLBACK_DISPATCHER_HANDLE_KEY, 0);
             startBackgroundIsolate(context, callbackDispatcherHandle);
@@ -177,7 +177,7 @@ public class FlutterBackgroundExecutor implements MethodCallHandler {
             return;
         }
 
-        Log.i(TAG, "Starting BroadcastHandlerService...");
+        Log.i(TAG, "Starting BootHandlerService...");
         if (!isRunning()) {
             backgroundFlutterEngine = new FlutterEngine(context);
 
@@ -219,10 +219,10 @@ public class FlutterBackgroundExecutor implements MethodCallHandler {
      * corresponds to a callback registered with the Dart VM.
      */
     public void executeDartCallbackInBackgroundIsolate(Context context, Intent intent, final CountDownLatch latch) {
-        // Grab the handle for the callback associated with this alarm. Pay close
+        // Grab the handle for the dart callback. Pay close
         // attention to the type of the callback handle as storing this value in a
         // variable of the wrong size will cause the callback lookup to fail.
-        SharedPreferences preferences = context.getSharedPreferences(BroadcastHandlerService.SHARED_PREFERENCES_KEY,
+        SharedPreferences preferences = context.getSharedPreferences(BootHandlerService.SHARED_PREFERENCES_KEY,
                 0);
         long callbackHandle = preferences.getLong(FlutterBackgroundExecutor.CALLBACK_HANDLE_KEY, 0);
         // JSONObject params = null;
@@ -258,7 +258,7 @@ public class FlutterBackgroundExecutor implements MethodCallHandler {
 
         Log.i(TAG, "Executing Dart callback: " + callbackHandle + "...");
 
-        // Handle the alarm event in Dart. Note that for this plugin, we don't
+        // Handle the boot event in Dart. Note that for this plugin, we don't
         // care about the method name as we simply lookup and invoke the callback
         // provided.
         backgroundChannel.invokeMethod(
@@ -271,7 +271,7 @@ public class FlutterBackgroundExecutor implements MethodCallHandler {
         // backgroundChannel is the channel responsible for receiving the following
         // messages from
         // the background isolate that was setup by this plugin:
-        // - "BroadcastHandlerService.initialized"
+        // - "BootHandlerService.initialized"
         //
         // This channel is also responsible for sending requests from Android to Dart to
         // execute Dart

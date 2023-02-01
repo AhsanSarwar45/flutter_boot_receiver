@@ -3,7 +3,6 @@ package com.example.flutter_boot_listener;
 // Copyright 2017 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
-import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -12,7 +11,6 @@ import android.os.Build;
 import android.os.Handler;
 import android.util.Log;
 import androidx.annotation.NonNull;
-import androidx.core.app.AlarmManagerCompat;
 import androidx.core.app.JobIntentService;
 import java.util.Collections;
 import java.util.HashMap;
@@ -24,8 +22,8 @@ import java.util.concurrent.CountDownLatch;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class BroadcastHandlerService extends JobIntentService {
-  private static final String TAG = "BroadcastHandlerService";
+public class BootHandlerService extends JobIntentService {
+  private static final String TAG = "BootHandlerService";
   protected static final String SHARED_PREFERENCES_KEY = "com.example.flutter_boot_listener";
   private static final int JOB_ID = 1984; // Random job ID.
 
@@ -35,12 +33,12 @@ public class BroadcastHandlerService extends JobIntentService {
 
   private static Context mContext;
 
-  public static void enqueueOnReceiveProcessing(Context context, Intent alarmContext) {
-    enqueueWork(context, BroadcastHandlerService.class, JOB_ID, alarmContext);
+  public static void enqueueOnReceiveProcessing(Context context, Intent intent) {
+    enqueueWork(context, BootHandlerService.class, JOB_ID, intent);
   }
 
   static void onInitialized() {
-    Log.i(TAG, "BroadcastHandlerService started!");
+    Log.i(TAG, "BootHandlerService started!");
     synchronized (mQueue) {
       // Handle all the events received before the Dart isolate was
       // initialized, then clear the mQueue.
@@ -52,7 +50,7 @@ public class BroadcastHandlerService extends JobIntentService {
   }
 
   /**
-   * Starts the background isolate for the {@link BroadcastHandlerService}.
+   * Starts the background isolate for the {@link BootHandlerService}.
    *
    * <p>
    * Preconditions:
@@ -107,7 +105,7 @@ public class BroadcastHandlerService extends JobIntentService {
     // intent to the queue and return.
     synchronized (mQueue) {
       if (!mFlutterBackgroundExecutor.isRunning()) {
-        Log.i(TAG, "BroadcastHandlerService has not yet started.");
+        Log.i(TAG, "BootHandlerService has not yet started.");
         mQueue.add(intent);
         return;
       }

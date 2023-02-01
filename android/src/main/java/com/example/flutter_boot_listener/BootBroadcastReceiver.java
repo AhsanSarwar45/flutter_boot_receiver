@@ -15,7 +15,7 @@ public class BootBroadcastReceiver extends BroadcastReceiver {
   public void onReceive(Context context, Intent intent) {
     if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
       Log.i("BootBroadcastReceiver", "Boot Completed");
-      BroadcastHandlerService.enqueueOnReceiveProcessing(context, intent);
+      BootHandlerService.enqueueOnReceiveProcessing(context, intent);
     }
   }
 }

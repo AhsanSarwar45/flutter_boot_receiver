@@ -24,7 +24,7 @@ import org.json.JSONObject;
  * <ol>
  * <li>Flutter app instructs this plugin to initialize() on the Dart side.
  * <li>The Dart side of this plugin sends the Android side a
- * "BroadcastHandlerService.start" message, along
+ * "BootHandlerService.start" message, along
  * with a Dart callback handle for a Dart callback that should be immediately
  * invoked by a
  * background Dart isolate.
@@ -33,7 +33,7 @@ import org.json.JSONObject;
  * includes a background Dart isolate.
  * <li>The Android side of this plugin instructs the new background Dart isolate
  * to execute the
- * callback that was received in the "BroadcastHandlerService.start" message.
+ * callback that was received in the "BootHandlerService.start" message.
  * <li>The Dart side of this plugin, running within the new background isolate,
  * executes the
  * designated callback. This callback prepares the background isolate to then
@@ -42,16 +42,16 @@ import org.json.JSONObject;
  * is fully
  * initialized and ready to execute arbitrary Dart tasks in the background. The
  * Dart side of
- * this plugin sends the Android side a "BroadcastHandlerService.initialized"
+ * this plugin sends the Android side a "BootHandlerService.initialized"
  * message to signify that the
  * Dart is ready to execute tasks.
  * </ol>
  */
-public class FlutterBroadcastListenerPlugin implements FlutterPlugin, MethodCallHandler {
-  private static final String TAG = "FlutterBroadcastListenerPlugin";
+public class FlutterBootListenerPlugin implements FlutterPlugin, MethodCallHandler {
+  private static final String TAG = "FlutterBootListenerPlugin";
   private Context context;
   private final Object initializationLock = new Object();
-  private MethodChannel flutterBroadcastListenerPluginChannel;
+  private MethodChannel FlutterBootListenerPluginChannel;
 
   @Override
   public void onAttachedToEngine(FlutterPluginBinding binding) {
@@ -60,22 +60,22 @@ public class FlutterBroadcastListenerPlugin implements FlutterPlugin, MethodCall
 
   public void onAttachedToEngine(Context applicationContext, BinaryMessenger messenger) {
     synchronized (initializationLock) {
-      if (flutterBroadcastListenerPluginChannel != null) {
+      if (FlutterBootListenerPluginChannel != null) {
         return;
       }
 
       Log.i(TAG, "onAttachedToEngine");
       this.context = applicationContext;
 
-      flutterBroadcastListenerPluginChannel = new MethodChannel(
+      FlutterBootListenerPluginChannel = new MethodChannel(
           messenger,
           "com.example.flutter_boot_listener/main",
           JSONMethodCodec.INSTANCE);
 
-      // Instantiate a new FlutterBroadcastListenerPlugin and connect the primary
+      // Instantiate a new FlutterBootListenerPlugin and connect the primary
       // method channel for
       // Android/Flutter communication.
-      flutterBroadcastListenerPluginChannel.setMethodCallHandler(this);
+      FlutterBootListenerPluginChannel.setMethodCallHandler(this);
     }
   }
 
@@ -83,11 +83,11 @@ public class FlutterBroadcastListenerPlugin implements FlutterPlugin, MethodCall
   public void onDetachedFromEngine(FlutterPluginBinding binding) {
     Log.i(TAG, "onDetachedFromEngine");
     context = null;
-    flutterBroadcastListenerPluginChannel.setMethodCallHandler(null);
-    flutterBroadcastListenerPluginChannel = null;
+    FlutterBootListenerPluginChannel.setMethodCallHandler(null);
+    FlutterBootListenerPluginChannel = null;
   }
 
-  public FlutterBroadcastListenerPlugin() {
+  public FlutterBootListenerPlugin() {
   }
 
   /**
@@ -100,7 +100,7 @@ public class FlutterBroadcastListenerPlugin implements FlutterPlugin, MethodCall
     Object arguments = call.arguments;
     try {
       switch (method) {
-        case "BroadcastHandlerService.start":
+        case "BootHandlerService.start":
           // This message is sent when the Dart side of this plugin is told to initialize.
           long callbackDispatcherHandle = ((JSONArray) arguments).getLong(0);
           long callbackHandle = ((JSONArray) arguments).getLong(1);
@@ -111,8 +111,8 @@ public class FlutterBroadcastListenerPlugin implements FlutterPlugin, MethodCall
           // this onMethodCall() method will receive messages from both the primary and
           // background
           // method channels.
-          BroadcastHandlerService.setCallbackHandles(context, callbackDispatcherHandle, callbackHandle);
-          BroadcastHandlerService.startBackgroundIsolate(context, callbackDispatcherHandle);
+          BootHandlerService.setCallbackHandles(context, callbackDispatcherHandle, callbackHandle);
+          BootHandlerService.startBackgroundIsolate(context, callbackDispatcherHandle);
           result.success(true);
           break;
         default:
@@ -122,7 +122,7 @@ public class FlutterBroadcastListenerPlugin implements FlutterPlugin, MethodCall
     } catch (JSONException e) {
       result.error("error", "JSON error: " + e.getMessage(), null);
     } catch (PluginRegistrantException e) {
-      result.error("error", "FlutterBroadcastListener error: " + e.getMessage(), null);
+      result.error("error", "FlutterBootListener error: " + e.getMessage(), null);
     }
   }
 }

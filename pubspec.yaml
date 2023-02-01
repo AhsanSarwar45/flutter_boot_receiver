@@ -28,7 +28,7 @@ flutter:
     platforms:
       android:
         package: com.example.flutter_boot_listener
-        pluginClass: FlutterBroadcastListenerPlugin
+        pluginClass: FlutterBootListenerPlugin
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:

@@ -8,6 +8,6 @@ class PluginRegistrantException extends RuntimeException {
   public PluginRegistrantException() {
     super(
         "PluginRegistrantCallback is not set. Did you forget to call "
-            + "BroadcastHandlerService.setPluginRegistrant? See the README for instructions.");
+            + "BootHandlerService.setPluginRegistrant? See the README for instructions.");
   }
 }

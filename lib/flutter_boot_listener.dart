@@ -15,7 +15,7 @@ const String _backgroundName = 'com.example.flutter_boot_listener/background';
 // any necessary processing in Dart (e.g., populating a custom object) before
 // invoking the provided callback.
 @pragma('vm:entry-point')
-void broadcastListenerCallbackDispatcher() {
+void bootListenerCallbackDispatcher() {
   // Initialize state necessary for MethodChannels.
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -40,18 +40,17 @@ void broadcastListenerCallbackDispatcher() {
   });
 
   // Once we've finished initializing, let the native portion of the plugin
-  // know that it can start scheduling alarms.
-  channel.invokeMethod<void>('BroadcastHandlerService.initialized');
+  // know that it can start receiving boot complete events.
+  channel.invokeMethod<void>('BootHandlerService.initialized');
 }
 
 // A lambda that gets the handle for the given [callback].
 typedef _GetCallbackHandle = CallbackHandle? Function(Function callback);
 
-/// A Flutter plugin for registering Dart callbacks with the Android
-/// AlarmManager service.
+/// A Flutter plugin for registering Dart callbacks when the Android device boots up
 ///
 /// See the example/ directory in this package for sample usage.
-class BroadcastListener {
+class BootListener {
   static const String _channelName = 'com.example.flutter_boot_listener/main';
   static const MethodChannel _channel =
       MethodChannel(_channelName, JSONMethodCodec());
@@ -71,20 +70,19 @@ class BroadcastListener {
     _getCallbackHandle = (getCallbackHandle ?? _getCallbackHandle);
   }
 
-  /// Starts the [BroadcastListener] service. This must be called before
-  /// setting any alarms.
+  /// Starts the [BootListener] service. This must be called in order to receive boot complete events.
   ///
   /// Returns a [Future] that resolves to `true` on success and `false` on
   /// failure.
   static Future<bool> initialize(void Function() callback) async {
     final callbackDispatcherHandle =
-        _getCallbackHandle(broadcastListenerCallbackDispatcher);
+        _getCallbackHandle(bootListenerCallbackDispatcher);
     if (callbackDispatcherHandle == null) {
       return false;
     }
     final callbackHandle = _getCallbackHandle(callback);
     final isSuccessful = await _channel.invokeMethod<bool>(
-        'BroadcastHandlerService.start', <dynamic>[
+        'BootHandlerService.start', <dynamic>[
       callbackDispatcherHandle.toRawHandle(),
       callbackHandle?.toRawHandle()
     ]);
