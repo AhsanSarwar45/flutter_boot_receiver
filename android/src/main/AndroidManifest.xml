@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.flux.flutter_boot_listener">
+    package="com.flux.flutter_boot_receiver">
 
     <application>
     </application>

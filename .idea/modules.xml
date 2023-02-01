@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/flutter_boot_listener.iml" filepath="$PROJECT_DIR$/flutter_boot_listener.iml" />
-      <module fileurl="file://$PROJECT_DIR$/android/flutter_boot_listener_android.iml" filepath="$PROJECT_DIR$/android/flutter_boot_listener_android.iml" />
-      <module fileurl="file://$PROJECT_DIR$/flux/android/flutter_boot_listener_flux_android.iml" filepath="$PROJECT_DIR$/flux/android/flutter_boot_listener_flux_android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/flutter_boot_receiver.iml" filepath="$PROJECT_DIR$/flutter_boot_receiver.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android/flutter_boot_receiver_android.iml" filepath="$PROJECT_DIR$/android/flutter_boot_receiver_android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/flux/android/flutter_boot_receiver_flux_android.iml" filepath="$PROJECT_DIR$/flux/android/flutter_boot_receiver_flux_android.iml" />
     </modules>
   </component>
 </project>

@@ -1,4 +1,4 @@
-package com.flux.flutter_boot_listener;
+package com.flux.flutter_boot_receiver;
 
 import android.content.Context;
 import android.util.Log;
@@ -69,7 +69,7 @@ public class FlutterBootListenerPlugin implements FlutterPlugin, MethodCallHandl
 
       FlutterBootListenerPluginChannel = new MethodChannel(
           messenger,
-          "com.flux.flutter_boot_listener/main",
+          "com.flux.flutter_boot_receiver/main",
           JSONMethodCodec.INSTANCE);
 
       // Instantiate a new FlutterBootListenerPlugin and connect the primary
@@ -156,7 +156,7 @@ public class FlutterBootListenerPlugin implements FlutterPlugin, MethodCallHandl
 // public void onAttachedToEngine(@NonNull FlutterPluginBinding
 // flutterPluginBinding) {
 // channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(),
-// "flutter_boot_listener/main");
+// "flutter_boot_receiver/main");
 // channel.setMethodCallHandler(this);
 // mContext = flutterPluginBinding.getApplicationContext();
 // }

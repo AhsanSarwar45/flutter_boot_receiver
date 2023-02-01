@@ -41,14 +41,14 @@ In your `AndroidManifest.xml`:
 
 ```xml
 <service
-    android:name="com.flux.flutter_boot_listener.BootHandlerService"
+    android:name="com.flux.flutter_boot_receiver.BootHandlerService"
     android:exported="false"
     android:permission="android.permission.BIND_JOB_SERVICE"
     />
 <receiver
     android:enabled="true"
     android:exported="true"
-    android:name="com.flux.flutter_boot_listener.BootBroadcastReceiver"
+    android:name="com.flux.flutter_boot_receiver.BootBroadcastReceiver"
     android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
     <intent-filter>
         <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -68,14 +68,14 @@ Your `AndroidManifest.xml` should now have a structure similar to this:
     <application>
         <!-- Other activities, services etc... -->
         <service
-            android:name="com.flux.flutter_boot_listener.BootHandlerService"
+            android:name="com.flux.flutter_boot_receiver.BootHandlerService"
             android:exported="false"
             android:permission="android.permission.BIND_JOB_SERVICE"
             />
         <receiver
             android:enabled="true"
             android:exported="true"
-            android:name="com.flux.flutter_boot_listener.BootBroadcastReceiver"
+            android:name="com.flux.flutter_boot_receiver.BootBroadcastReceiver"
             android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -89,7 +89,7 @@ Your `AndroidManifest.xml` should now have a structure similar to this:
 ## Usage
 
 ```dart
-import 'package:flutter_boot_listener/flutter_boot_listener.dart';
+import 'package:flutter_boot_receiver/flutter_boot_receiver.dart';
 
 @pragma('vm:entry-point')
 void callback() async {

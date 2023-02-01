@@ -1,4 +1,4 @@
-package com.flux.flutter_boot_listener;
+package com.flux.flutter_boot_receiver;
 
 import android.content.Context;
 import android.content.Intent;
@@ -278,7 +278,7 @@ public class FlutterBackgroundExecutor implements MethodCallHandler {
         // callbacks in the background isolate.
         backgroundChannel = new MethodChannel(
                 isolate,
-                "com.flux.flutter_boot_listener/background",
+                "com.flux.flutter_boot_receiver/background",
                 JSONMethodCodec.INSTANCE);
         backgroundChannel.setMethodCallHandler(this);
     }

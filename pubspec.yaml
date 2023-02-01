@@ -1,4 +1,4 @@
-name: flutter_boot_listener
+name: flutter_boot_receiver
 description: A new flutter plugin project.
 version: 0.0.1
 
@@ -27,7 +27,7 @@ flutter:
   plugin:
     platforms:
       android:
-        package: com.flux.flutter_boot_listener
+        package: com.flux.flutter_boot_receiver
         pluginClass: FlutterBootListenerPlugin
 
   # To add assets to your plugin package, add an assets section, like this:

@@ -5,9 +5,9 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_boot_listener/broadcast_action.dart';
+import 'package:flutter_boot_receiver/broadcast_action.dart';
 
-const String _backgroundName = 'com.flux.flutter_boot_listener/background';
+const String _backgroundName = 'com.flux.flutter_boot_receiver/background';
 
 // This is the entrypoint for the background isolate. Since we can only enter
 // an isolate once, we setup a MethodChannel to listen for method invocations
@@ -51,7 +51,7 @@ typedef _GetCallbackHandle = CallbackHandle? Function(Function callback);
 ///
 /// See the flux/ directory in this package for sample usage.
 class BootListener {
-  static const String _channelName = 'com.flux.flutter_boot_listener/main';
+  static const String _channelName = 'com.flux.flutter_boot_receiver/main';
   static const MethodChannel _channel =
       MethodChannel(_channelName, JSONMethodCodec());
 

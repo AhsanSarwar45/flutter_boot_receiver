@@ -1,4 +1,4 @@
-group 'com.flux.flutter_boot_listener'
+group 'com.flux.flutter_boot_receiver'
 version '1.0'
 
 buildscript {
