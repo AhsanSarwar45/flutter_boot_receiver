@@ -5,7 +5,6 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_boot_receiver/broadcast_action.dart';
 
 const String _backgroundName = 'com.flux.flutter_boot_receiver/background';
 
