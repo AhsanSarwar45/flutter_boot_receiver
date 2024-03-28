@@ -1,4 +1,4 @@
-# flutter-boot-listener
+# flutter_boot_listener
 
 A Flutter plugin for registering Dart callbacks when the Android device boots up.
 
