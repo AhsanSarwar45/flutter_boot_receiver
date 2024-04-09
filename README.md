@@ -1,4 +1,4 @@
-# flutter-boot-listener
+# flutter_boot_listener
 
 A Flutter plugin for registering Dart callbacks when the Android device boots up.
 
@@ -21,9 +21,11 @@ A Flutter plugin for registering Dart callbacks when the Android device boots up
 
 ## Installation
 
+1. `flutter pub add flutter_boot_receiver`
+
 In your `AndroidManifest.xml`:
 
-1. Add `android:installLocation="internalOnly"` in your `manifest` tag. Only devices installed in internal storage can receive the `BOOT_COMPLETE` broadcast in Android.
+2. Add `android:installLocation="internalOnly"` in your `manifest` tag. Only devices installed in internal storage can receive the `BOOT_COMPLETE` broadcast in Android.
 
 ```xml
 <manifest
@@ -31,13 +33,13 @@ In your `AndroidManifest.xml`:
     >
 ```
 
-2. Add the following permission:
+3. Add the following permission:
 
 ```xml
 <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 ```
 
-3. Add the following service and receiver inside your `application` tag:
+4. Add the following service and receiver inside your `application` tag:
 
 ```xml
 <service
