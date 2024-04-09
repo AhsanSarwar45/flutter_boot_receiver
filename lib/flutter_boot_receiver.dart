@@ -57,17 +57,17 @@ class BootReceiver {
   // Callback used to get the handle for a callback. It's
   // [PluginUtilities.getCallbackHandle] by default.
   // ignore: prefer_function_declarations_over_variables
-  static _GetCallbackHandle _getCallbackHandle =
+  static final _GetCallbackHandle _getCallbackHandle =
       (Function callback) => PluginUtilities.getCallbackHandle(callback);
 
   /// This is exposed for the unit tests. It should not be accessed by users of
   /// the plugin.
-  @visibleForTesting
-  static void setTestOverrides({
-    _GetCallbackHandle? getCallbackHandle,
-  }) {
-    _getCallbackHandle = (getCallbackHandle ?? _getCallbackHandle);
-  }
+  // @visibleForTesting
+  // static void setTestOverrides({
+  //   _GetCallbackHandle? getCallbackHandle,
+  // }) {
+  //   _getCallbackHandle = (getCallbackHandle ?? _getCallbackHandle);
+  // }
 
   /// Starts the [BootReceiver] service. This must be called in order to receive boot complete events.
   ///
