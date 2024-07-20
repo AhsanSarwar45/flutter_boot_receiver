@@ -1,6 +1,6 @@
 name: flutter_boot_receiver
 description: A Flutter plugin for registering Dart callbacks when the Android device boots up
-version: 1.1.0
+version: 1.2.0
 homepage: https://github.com/AhsanSarwar45/flutter_boot_receiver
 repository: https://github.com/AhsanSarwar45/flutter_boot_receiver
 issue_tracker: https://github.com/AhsanSarwar45/flutter_boot_receiver/issues
