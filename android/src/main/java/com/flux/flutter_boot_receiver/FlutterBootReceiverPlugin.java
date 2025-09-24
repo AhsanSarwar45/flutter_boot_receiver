@@ -9,10 +9,8 @@ import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
-import io.flutter.view.FlutterNativeView;
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
  * Flutter plugin for running one-shot and periodic tasks sometime in the future
@@ -29,7 +27,7 @@ import org.json.JSONObject;
  * invoked by a
  * background Dart isolate.
  * <li>The Android side of this plugin spins up a background
- * {@link FlutterNativeView}, which
+ * {@link io.flutter.embedding.engine.FlutterEngine}, which
  * includes a background Dart isolate.
  * <li>The Android side of this plugin instructs the new background Dart isolate
  * to execute the
@@ -68,9 +66,9 @@ public class FlutterBootReceiverPlugin implements FlutterPlugin, MethodCallHandl
       this.context = applicationContext;
 
       FlutterBootReceiverPluginChannel = new MethodChannel(
-          messenger,
-          "com.flux.flutter_boot_receiver/main",
-          JSONMethodCodec.INSTANCE);
+              messenger,
+              "com.flux.flutter_boot_receiver/main",
+              JSONMethodCodec.INSTANCE);
 
       // Instantiate a new FlutterBootReceiverPlugin and connect the primary
       // method channel for
@@ -83,8 +81,10 @@ public class FlutterBootReceiverPlugin implements FlutterPlugin, MethodCallHandl
   public void onDetachedFromEngine(FlutterPluginBinding binding) {
     Log.i(TAG, "onDetachedFromEngine");
     context = null;
-    FlutterBootReceiverPluginChannel.setMethodCallHandler(null);
-    FlutterBootReceiverPluginChannel = null;
+    if (FlutterBootReceiverPluginChannel != null) {
+      FlutterBootReceiverPluginChannel.setMethodCallHandler(null);
+      FlutterBootReceiverPluginChannel = null;
+    }
   }
 
   public FlutterBootReceiverPlugin() {
@@ -121,115 +121,8 @@ public class FlutterBootReceiverPlugin implements FlutterPlugin, MethodCallHandl
       }
     } catch (JSONException e) {
       result.error("error", "JSON error: " + e.getMessage(), null);
-    } catch (PluginRegistrantException e) {
+    } catch (Exception e) {
       result.error("error", "FlutterBootReceiver error: " + e.getMessage(), null);
     }
   }
 }
-
-// import android.content.Context;
-// import android.content.Intent;
-// import androidx.annotation.NonNull;
-// import io.flutter.embedding.engine.plugins.FlutterPlugin;
-// import io.flutter.plugin.common.MethodCall;
-// import io.flutter.plugin.common.MethodChannel;
-// import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
-// import io.flutter.plugin.common.MethodChannel.Result;
-// import io.flutter.plugin.common.PluginRegistry.Registrar;
-// import java.util.ArrayList;
-// import io.flutter.view.FlutterCallbackInformation;
-// import io.flutter.view.FlutterMain;
-// import io.flutter.view.FlutterNativeView;
-// import io.flutter.view.FlutterRunArguments;
-
-// public class FlutterBootReceiver implements FlutterPlugin, MethodCallHandler
-// {
-
-// public static final String CALLBACK_HANDLE_KEY = "callback_handle_key";
-// public static final String CALLBACK_DISPATCHER_HANDLE_KEY =
-// "callback_dispatcher_handle_key";
-
-// private MethodChannel channel;
-// private static Context mContext;
-
-// @Override
-// public void onAttachedToEngine(@NonNull FlutterPluginBinding
-// flutterPluginBinding) {
-// channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(),
-// "flutter_boot_receiver/main");
-// channel.setMethodCallHandler(this);
-// mContext = flutterPluginBinding.getApplicationContext();
-// }
-
-// private static long mCallbackDispatcherHandle;
-// private static long mCallbackHandle;
-// private static FlutterRunArguments mFlutterRunArguments;
-// private static FlutterNativeView mBackgroundFlutterView;
-
-// public static long getCallbackDispatcherHandle() {
-// return mCallbackDispatcherHandle;
-// }
-
-// public static long getCallbackHandle() {
-// return mCallbackHandle;
-// }
-
-// public static Context getContext() {
-// return mContext;
-// }
-
-// public static FlutterRunArguments getFlutterRunArguments() {
-// return mFlutterRunArguments;
-// }
-
-// public static FlutterNativeView getBackgroundFlutterView() {
-// return mBackgroundFlutterView;
-// }
-
-// @Override
-// public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
-
-// if (call.method.equals("initialize")) {
-
-// ArrayList args = call.arguments();
-// long callBackDispatcherHandle = (long) args.get(0);
-// mCallbackDispatcherHandle = callBackDispatcherHandle;
-
-// long callBackHandle = (long) args.get(1);
-// mCallbackHandle = callBackHandle;
-
-// FlutterCallbackInformation flutterCallbackInformation =
-// FlutterCallbackInformation.lookupCallbackInformation(
-// FlutterBootReceiver.getCallbackDispatcherHandle());
-
-// mFlutterRunArguments = new FlutterRunArguments();
-// mFlutterRunArguments.bundlePath = FlutterMain.findAppBundlePath();
-// mFlutterRunArguments.entrypoint = flutterCallbackInformation.callbackName;
-// mFlutterRunArguments.libraryPath =
-// flutterCallbackInformation.callbackLibraryPath;
-
-// mBackgroundFlutterView = new FlutterNativeView(mContext, true);
-
-// result.success(null);
-// return;
-// }
-// // else if (call.method.equals("run")) {
-// // Intent intent = new Intent(mContext, MyService.class);
-// // intent.putExtra(CALLBACK_HANDLE_KEY, mCallbackHandle);
-// // intent.putExtra(CALLBACK_DISPATCHER_HANDLE_KEY,
-// // mCallbackDispatcherHandle);
-// // mContext.startService(intent);
-
-// // result.success(null);
-// // return;
-// // }
-// result.notImplemented();
-// }
-
-// @Override
-// public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
-// channel.setMethodCallHandler(null);
-// }
-// }
-
-// // boot receiver
